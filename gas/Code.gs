@@ -76,8 +76,8 @@ function handleGetSlots() {
           slotName: String(row[1]),
           date: String(date),
           location: String(row[3]),
-          startTime: String(row[4]),
-          endTime: String(row[5]),
+          startTime: formatTime_(row[4]),
+          endTime: formatTime_(row[5]),
           jobContent: String(row[6]),
           capacity: Number(row[7]) || 0,
           applicationCount: Number(row[8]) || 0,
@@ -153,6 +153,16 @@ function handleSubmitApplication(body) {
   } catch (err) {
     return createResponse({ success: false, error: "申請の保存に失敗しました: " + err.message });
   }
+}
+
+// =============================
+// 時刻フォーマットヘルパー
+// =============================
+function formatTime_(value) {
+  if (value instanceof Date) {
+    return Utilities.formatDate(value, "Asia/Tokyo", "HH:mm");
+  }
+  return String(value);
 }
 
 // =============================
