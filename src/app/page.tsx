@@ -6,25 +6,6 @@ function remainingCount(slot: ShiftSlot): number {
   return Math.max(0, slot.capacity - slot.applicationCount);
 }
 
-// GASがDate型をString()変換した "Sat Dec 30 1899 09:00:00..." 形式に対応
-function formatTime(value: string): string {
-  const d = new Date(value);
-  if (!isNaN(d.getTime())) {
-    return d.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit", hour12: false });
-  }
-  return value;
-}
-
-function formatDate(dateStr: string): string {
-  const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return dateStr;
-  return d.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    weekday: "short",
-  });
-}
 
 function StatusBadge({ slot }: { slot: ShiftSlot }) {
   const remaining = remainingCount(slot);
@@ -101,14 +82,14 @@ async function ShiftList() {
                   <dt className="sr-only">日付</dt>
                   <dd className="flex items-center gap-1">
                     <span>📅</span>
-                    {formatDate(slot.date)}
+                    {slot.date}
                   </dd>
                 </div>
                 <div>
                   <dt className="sr-only">時間</dt>
                   <dd className="flex items-center gap-1">
                     <span>🕐</span>
-                    {formatTime(slot.startTime)}〜{formatTime(slot.endTime)}
+                    {slot.startTime}〜{slot.endTime}
                   </dd>
                 </div>
                 <div>
